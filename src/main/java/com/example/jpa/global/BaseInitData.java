@@ -31,7 +31,13 @@ public class BaseInitData {
     public ApplicationRunner applicationRunner() {
         return args -> {
             self.work1();
+            self.work2();
         };
+    }
+
+
+    @Transactional
+    public void work2() {
     }
 
     @Transactional
@@ -42,14 +48,26 @@ public class BaseInitData {
         }
 
         Post p1 = postService.write("title1", "body1");
+        Post p2 = postService.write("title1", "body2");
+        Post p3 = postService.write("title1", "body3");
 
         Comment c1 = Comment.builder()
                 .body("comment1")
                 .build();
 
-        p1.getComments().add(c1); // 관계의 주인이 DB 반영을 한다.
+        p1.addComment(c1);
 
-        commentService.write(p1, "comment1");
+        Comment c2 = Comment.builder()
+                .body("comment2")
+                .build();
+
+        p1.addComment(c2);
+
+        Comment c3 = Comment.builder()
+                .body("comment3")
+                .build();
+
+        p1.addComment(c3);
 
     }
 }

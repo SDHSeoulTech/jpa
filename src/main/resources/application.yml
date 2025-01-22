@@ -6,6 +6,9 @@ spring:
     ansi:
       enabled: always
 
+  profiles:
+    active: test
+
   datasource:
     url: jdbc:h2:./db_dev;MODE=MySQL
     username: sa
@@ -21,7 +24,7 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQLDialect
+#        dialect: org.hibernate.dialect.MySQLDialect
 
 logging:
   level:
