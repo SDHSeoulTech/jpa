@@ -7,7 +7,7 @@ spring:
       enabled: always
 
   profiles:
-    active: test
+    active: dev
 
   datasource:
     url: jdbc:h2:./db_dev;MODE=MySQL
@@ -17,13 +17,14 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # 재시작하면 테이블 지우고 다시 만듦. update 유지.
+      ddl-auto: create # 재시작하면 테이블 지우고 다시 만듦. update 유지.
     show-sql: false
     properties:
       hibernate:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
+        default_batch_fetch_size: 100
 #        dialect: org.hibernate.dialect.MySQLDialect
 
 logging:

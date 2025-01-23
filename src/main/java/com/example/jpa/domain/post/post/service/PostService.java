@@ -1,5 +1,6 @@
 package com.example.jpa.domain.post.post.service;
 
+import com.example.jpa.domain.member.entity.Member;
 import com.example.jpa.domain.post.post.entity.Post;
 import com.example.jpa.domain.post.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +18,15 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public Post write(String title, String body) {
-        // 1. Post 조립
+    public Post write(Member author, String title, String body) {
+
         Post post = Post.builder()
+                .author(author)
                 .title(title)
                 .body(body)
                 .build();
 
-        //post.setId(1L);
-//        post.setCreateDate(LocalDateTime.now());
-//        post.setModifiedDate(LocalDateTime.now());
-//        post.setTitle(title);
-//        post.setBody(body);
-        // 2. repository에게 넘김
-        postRepository.save(post);
-        // 3. DB 반영
-        return post;
+        return postRepository.save(post);
     }
 
     @Transactional
@@ -82,10 +76,16 @@ public class PostService {
     public List<Post> findByTitleLike(String keyword) {
         return postRepository.findByTitleLike(keyword);
     }
+    public Page<Post> findByTitleLike(String keyword, Pageable pageable) {
+        return postRepository.findByTitleLike(keyword, pageable);
+    }
     public List<Post> findByOrderByIdDesc() {
         return postRepository.findByOrderByIdDesc();
     }
     public List<Post> findTop2ByTitleOrderByIdDesc(String title) {
         return postRepository.findTop2ByTitleOrderByIdDesc(title);
+    }
+    public List<Post> findByAuthorUsername(String username) {
+        return postRepository.findByAuthorUsername(username);
     }
 }
